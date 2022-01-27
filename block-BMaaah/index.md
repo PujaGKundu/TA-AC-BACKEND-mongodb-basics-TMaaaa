@@ -3,7 +3,13 @@ writeCode
 Write code to execute below expressions.
 
 1. Create a database named `blog`.
+
+> use blog
+
 2. Create a collection called 'articles'.
+
+> db.createCollection('articles')
+
 3. Insert multiple documents(at least 3) into articles. It should have fields
 
 - title as string
@@ -32,24 +38,57 @@ Write code to execute below expressions.
 }
 ```
 
+> db.articles.insertMany(articles)
+
 4. Find all the articles using `db.COLLECTION_NAME.find()`
+
+> db.articles.find().pretty()
+
 5. Find a document using \_id field.
+
+> db.articles.findOne({ \_id: {exists: true}) });
+
 6. 1. Find documents using title
+
+> db.articles.findOne({ title: "user" });
+
 7. 2. Find documents using author's name field.
+
+> db.articles.find({ author: { $all: ["demo"] } });
+
 8. Find document using a specific tag.
 
+>
+
 9. Update title of a document using its \_id field.
+
+>
+
 10. Update a author's name using article's title.
+
+>
+
 11. rename details field to description from all articles in articles collection.
+
+>
+
 12. Add additional tag in a specific document.
+
+>
 
 13. Update an article's title using $set and without $set.
 
 - Write the differences here ?
 
+>
+
 13. find an article using title and increment it's auhtor's age by 5.
 
+>
+
 14. Delete a document using \_id field with `db.COLLECTION_NAME.remove()`.
+
+>
 
 // Sample data
 
@@ -168,6 +207,17 @@ db.users.insertMany([
 Insert above data into database to perform below queries:-
 
 - Find all males who play cricket.
+
+> db.users.find({ gender: "Male" }).pretty();
+
 - Update user with extra golf field in sports array whose name is "Steve Ortega".
+
+> db.users.update({ name: "Steve Ortega" }, { $push: { sports: "golf" } });
+
 - Find all users who play either 'football' or 'cricket'.
+
+> db.users.find({ sports: { $in: ["football", "cricket"] } });
+
 - Find all users whose name includes 'ri' in their name.
+
+> db.users.find({ name: { $all: ["ri"] } });
