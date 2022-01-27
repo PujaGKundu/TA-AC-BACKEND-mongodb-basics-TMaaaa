@@ -1,0 +1,1 @@
+db.cricket.insertMany(players);
