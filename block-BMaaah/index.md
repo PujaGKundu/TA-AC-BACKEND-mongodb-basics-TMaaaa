@@ -46,7 +46,7 @@ Write code to execute below expressions.
 
 5. Find a document using \_id field.
 
-> db.articles.findOne({ \_id: {exists: true}) });
+> db.articles.findOne({ "\_id": ObjectId("5f55d02780fe5fe6311902e3") });
 
 6. 1. Find documents using title
 
@@ -54,41 +54,41 @@ Write code to execute below expressions.
 
 7. 2. Find documents using author's name field.
 
-> db.articles.find({ author: { $all: ["demo"] } });
+> db.articles.findOne({ "author.name": "demo" } });
 
 8. Find document using a specific tag.
 
->
+> db.articles.findOne({ "author.name": "demo" } });
 
 9. Update title of a document using its \_id field.
 
->
+> db.articles.update({"\_id": ObjectId("5f55d02780fe5fe6311902e3")}, {$set: {title: "MongoDB"}})
 
 10. Update a author's name using article's title.
 
->
+> db.articles.update({"title" : "demo"}, {$set: {"author.name": "JavaScript"}})
 
 11. rename details field to description from all articles in articles collection.
 
->
+> db.articles.update({}, {$rename: {details: "description"}}, {multi: true})
 
 12. Add additional tag in a specific document.
 
->
+> db.articles.update({title: "user"}, {$push: {"tags": "Html & CSS"}})
 
 13. Update an article's title using $set and without $set.
 
 - Write the differences here ?
 
->
+> If $set is not used it updates the complete set of array with the element
 
 13. find an article using title and increment it's auhtor's age by 5.
 
->
+> db.articles.update({title: "demo"}, {$inc: {"author.age": 5}})
 
 14. Delete a document using \_id field with `db.COLLECTION_NAME.remove()`.
 
->
+> db.articles.remove({"\_id": ObjectId("5f55d02780fe5fe6311902e3")})
 
 // Sample data
 
@@ -208,16 +208,16 @@ Insert above data into database to perform below queries:-
 
 - Find all males who play cricket.
 
-> db.users.find({ gender: "Male" }).pretty();
+> db.users.find({ gender: "Male", sports: "cricket" }).pretty()
 
 - Update user with extra golf field in sports array whose name is "Steve Ortega".
 
-> db.users.update({ name: "Steve Ortega" }, { $push: { sports: "golf" } });
+> db.users.update({ name: "Steve Ortega" }, { $push: { sports: "golf" } }).pretty()
 
 - Find all users who play either 'football' or 'cricket'.
 
-> db.users.find({ sports: { $in: ["football", "cricket"] } });
+> db.users.find({ sports: { $in: ["football", "cricket"] } }).pretty()
 
 - Find all users whose name includes 'ri' in their name.
 
-> db.users.find({ name: { $all: ["ri"] } });
+> db.users.find({ name: /ri/i }).pretty()
